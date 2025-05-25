@@ -79,19 +79,15 @@ public class PedidoDAO {
         return lista;
     }
 
-    public static boolean borrarPedido(int id) {
-        String sql = "DELETE FROM pedidos WHERE id = ?";
+    public static boolean borrarPedido(int id) throws SQLException {
 
-        try (Connection conn = Conexion.getConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = Conexion.getConexion();
+        PreparedStatement borrar = conn.prepareStatement("DELETE FROM pedidos WHERE id = ?"); {
 
-            pstmt.setInt(1, id);
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            borrar.setInt(1, id);
+            int cantidadBorrados = borrar.executeUpdate();
+            return cantidadBorrados > 0;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 

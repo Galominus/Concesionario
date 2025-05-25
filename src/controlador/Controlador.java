@@ -61,7 +61,8 @@ public class Controlador {
 
         });
         vista.getBtnBajaPedido().addActionListener(e -> {
-           Pedido pedidoSeleccionado = vista.getPedidoSeleccionado();
+
+            Pedido pedidoSeleccionado = vista.getPedidoSeleccionado();
 
            if (pedidoSeleccionado != null) {
                int confirmacion = JOptionPane.showConfirmDialog(null,
@@ -70,9 +71,14 @@ public class Controlador {
                            JOptionPane.YES_NO_CANCEL_OPTION);
 
                if (confirmacion == JOptionPane.YES_OPTION) {
-                       boolean borrado = PedidoDAO.borrarPedido(pedidoSeleccionado.getId());
+                   boolean borrado;
+                   try {
+                       borrado = PedidoDAO.borrarPedido(pedidoSeleccionado.getId());
+                   } catch (SQLException ex) {
+                       throw new RuntimeException(ex);
+                   }
 
-                       if (borrado) {
+                   if (borrado) {
                            vista.eliminarPedidoDeLista(pedidoSeleccionado);
                            JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente.");
                        } else {

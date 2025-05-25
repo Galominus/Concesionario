@@ -28,6 +28,15 @@ public class Vista {
         frame.setVisible(true);
         modeloLista = new DefaultListModel<>();
         listaPedidos.setModel(modeloLista);
+
+        // Listener del JList. (como si fuera un botón).
+        listaPedidos.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                // Si se selecciona algún elemento de la lista, el botón BAJA PEDIDO se activa.
+                btnBajaPedido.setEnabled(listaPedidos.getSelectedIndex() != -1);
+            }
+        });
+
     }
 
     // Funciones que rellenan los comboBox con los datos de la base de datos.
@@ -90,14 +99,14 @@ public class Vista {
         return (Boolean) pilotoAutoComboBox.getSelectedItem();
     }
 
-    // Mostrar la lista de pedidos en el TextArea
+    // Mostrar la lista de pedidos en el JList.
     public void mostrarPedidosEnJList(List<Pedido> pedidos) {
         //Limpiamos el contenido antes de mostrar.
         modeloLista.clear();
         for (Pedido p : pedidos) {
             modeloLista.addElement(p);
         }
-        btnBajaPedido.setEnabled(!pedidos.isEmpty());
+
     }
 
     // Devuelve el objeto Pedido seleccionado.
@@ -108,6 +117,5 @@ public class Vista {
     // Eliminar el pedido del Jlist y controlar el acceso al botón de Borrar.
     public void eliminarPedidoDeLista(Pedido p) {
         modeloLista.removeElement(p); // borramos el pedido de la lista visible.
-        btnBajaPedido.setEnabled(modeloLista.getSize() > 0); // activamos el botón de borrar si hay elementos en la lista.
     }
 }
