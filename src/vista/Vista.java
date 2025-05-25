@@ -118,4 +118,8 @@ public class Vista {
     public void eliminarPedidoDeLista(Pedido p) {
         modeloLista.removeElement(p); // borramos el pedido de la lista visible.
     }
+
+    public void agregarPedidoDeLista(Pedido p) {
+        modeloLista.addElement(p);
+    }
 }

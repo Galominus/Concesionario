@@ -8,6 +8,6 @@ import vista.Vista;
 public class Main {
     public static void main(String[] args) {
         Vista vista = new Vista();
-        Controlador ctrl = new Controlador(vista);
+        new Controlador(vista);
     }
 }

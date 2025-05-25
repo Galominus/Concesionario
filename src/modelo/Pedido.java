@@ -17,6 +17,14 @@ public class Pedido {
         this.pilotoAuto = pilotoAuto;
     }
 
+    public Pedido(String modelo, String motor, String color, int ruedas, boolean pilotoAuto) {
+        this.modelo = modelo;
+        this.motor = motor;
+        this.color = color;
+        this.ruedas = ruedas;
+        this.pilotoAuto = pilotoAuto;
+    }
+
     public int getId() {
         return id;
     }

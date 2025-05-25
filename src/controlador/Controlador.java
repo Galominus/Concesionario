@@ -92,6 +92,40 @@ public class Controlador {
 
 
         });
+        vista.getBtnHacerPedido().addActionListener(e -> {
+           String modelo = vista.getModeloSeleccionado();
+           String motor = vista.getMotorSeleccionado();
+           String color = vista.getColorSeleccionado();
+           int ruedas = vista.getRuedasSeleccionado();
+           boolean piloto = vista.getPilotoAutoSeleccionado();
+
+            int confirmacion = JOptionPane.showConfirmDialog(null,
+                    "¿Desea encargar el coche?",
+                    "Select an Option",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+
+                try {
+                  int idGenerado = PedidoDAO.agregarPedido(modelo,motor,color,ruedas,piloto);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                /*
+                if (idGenerado != -1) {
+                    Pedido nuevo = new Pedido(idGenerado, modelo, motor, color, ruedas, piloto);
+                    vista.agregarPedidoDeLista(nuevo);
+                    JOptionPane.showMessageDialog(null, "Pedido añadido correctamente.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo añadir el pedido.");
+                }
+
+                 */
+
+
+            }
+
+        });
 
 
 
