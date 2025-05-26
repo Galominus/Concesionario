@@ -19,7 +19,6 @@ public class Vista {
     private JList<Pedido> listaPedidos;
     private DefaultListModel<Pedido> modeloLista;
 
-
     public Vista() {
         JFrame frame = new JFrame("Examen Final. Ej2.");
         frame.setContentPane(panel1);
@@ -82,6 +81,11 @@ public class Vista {
         return btnBajaPedido;
     }
 
+    // Función que devuelve el panel para usarlo en las ventanas.
+    public JPanel getPanel1() {
+        return panel1;
+    }
+
     // Funciones que devuelven los contenidos de los comboBox.
     public String getModeloSeleccionado() {
         return modeloComboBox.getSelectedItem().toString();
@@ -119,7 +123,4 @@ public class Vista {
         modeloLista.removeElement(p); // borramos el pedido de la lista visible.
     }
 
-    public void agregarPedidoDeLista(Pedido p) {
-        modeloLista.addElement(p);
-    }
 }

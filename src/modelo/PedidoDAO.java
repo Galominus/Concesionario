@@ -84,35 +84,22 @@ public class PedidoDAO {
         Connection conn = Conexion.getConexion();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM pedidos WHERE id = ?");
         {
-
             stmt.setInt(1, id);
             int cantidadBorrados = stmt.executeUpdate();
             return cantidadBorrados > 0;
-
         }
     }
 
-    public static int agregarPedido(String modelo, String motor, String color, int ruedas, boolean piloto) throws SQLException {
+    public static void agregarPedido(Pedido p) throws SQLException {
         Connection conn = Conexion.getConexion();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO pedidos " +
-                "(modelo, motor, color, ruedas, pilotoAutomatico) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-        stmt.setString(1, modelo);
-        stmt.setString(2, motor);
-        stmt.setString(3, color);
-        stmt.setInt(4, ruedas);
-        stmt.setBoolean(5, piloto);
-        int insertadoOk = stmt.executeUpdate();
-        if (insertadoOk > 0) {
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1); // devuelve el id generado
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return -1; // si falla
+                "(modelo, motor, color, ruedas, pilotoAutomatico) VALUES (?, ?, ?, ?, ?)");
+        stmt.setString(1, p.getModelo());
+        stmt.setString(2, p.getMotor());
+        stmt.setString(3, p.getColor());
+        stmt.setInt(4, p.getRuedas());
+        stmt.setBoolean(5, p.getPilotoAuto());
+        stmt.executeUpdate();
     }
 }
 

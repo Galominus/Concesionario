@@ -49,7 +49,7 @@ public class Controlador {
                 List<Pedido> l = PedidoDAO.getPedido();
                 // Si no hay pedidos informamos al usuario con una ventana.
                 if (l.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No hay ningún pedido realizado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(vista.getPanel1(), "No hay ningún pedido realizado.", "Información", JOptionPane.INFORMATION_MESSAGE);
                 }else {
                     // Si hay pedidos, lo mostramos en el JList.
                     vista.mostrarPedidosEnJList(l);
@@ -65,7 +65,7 @@ public class Controlador {
             Pedido pedidoSeleccionado = vista.getPedidoSeleccionado();
 
            if (pedidoSeleccionado != null) {
-               int confirmacion = JOptionPane.showConfirmDialog(null,
+               int confirmacion = JOptionPane.showConfirmDialog(vista.getPanel1(),
                            "¿Desea borrar el pedido con número " + pedidoSeleccionado.getId() + "?",
                            "Select an Option",
                            JOptionPane.YES_NO_CANCEL_OPTION);
@@ -80,16 +80,12 @@ public class Controlador {
 
                    if (borrado) {
                            vista.eliminarPedidoDeLista(pedidoSeleccionado);
-                           JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente.");
+                           JOptionPane.showMessageDialog(vista.getPanel1(), "Pedido eliminado correctamente.");
                        } else {
-                           JOptionPane.showMessageDialog(null, "No se pudo eliminar el pedido.");
+                           JOptionPane.showMessageDialog(vista.getPanel1(), "No se pudo eliminar el pedido.");
                        }
                    }
-           } else {
-                   JOptionPane.showMessageDialog(null, "No hay ningún pedido seleccionado.");
            }
-
-
 
         });
         vista.getBtnHacerPedido().addActionListener(e -> {
@@ -98,8 +94,9 @@ public class Controlador {
            String color = vista.getColorSeleccionado();
            int ruedas = vista.getRuedasSeleccionado();
            boolean piloto = vista.getPilotoAutoSeleccionado();
+           Pedido p = new Pedido(modelo, motor, color, ruedas, piloto);
 
-            int confirmacion = JOptionPane.showConfirmDialog(null,
+            int confirmacion = JOptionPane.showConfirmDialog(vista.getPanel1(),
                     "¿Desea encargar el coche?",
                     "Select an Option",
                     JOptionPane.YES_NO_OPTION);
@@ -107,28 +104,13 @@ public class Controlador {
             if (confirmacion == JOptionPane.YES_OPTION) {
 
                 try {
-                  int idGenerado = PedidoDAO.agregarPedido(modelo,motor,color,ruedas,piloto);
+                  PedidoDAO.agregarPedido(p);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                /*
-                if (idGenerado != -1) {
-                    Pedido nuevo = new Pedido(idGenerado, modelo, motor, color, ruedas, piloto);
-                    vista.agregarPedidoDeLista(nuevo);
-                    JOptionPane.showMessageDialog(null, "Pedido añadido correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo añadir el pedido.");
-                }
-
-                 */
-
-
             }
 
         });
-
-
-
 
     }
 }

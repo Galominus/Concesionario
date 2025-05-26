@@ -45,7 +45,7 @@ public class Pedido {
         return ruedas;
     }
 
-    public boolean isPilotoAuto() {
+    public boolean getPilotoAuto() {
         return pilotoAuto;
     }
 
