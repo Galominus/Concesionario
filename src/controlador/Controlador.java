@@ -18,6 +18,7 @@ public class Controlador {
         configurarEventos();
     }
 
+    // Cargamos los datos al inicio del programa.
     private void cargarDatosIniciales(){
         try {
             ArrayList<String> modelos = PedidoDAO.getModelos();
@@ -41,6 +42,7 @@ public class Controlador {
         }
     }
 
+    // Métodos para los botones
     private void configurarEventos(){
 
         vista.getBtnVisualizarPedidos().addActionListener(e -> {
@@ -64,12 +66,14 @@ public class Controlador {
 
             Pedido pedidoSeleccionado = vista.getPedidoSeleccionado();
 
+            // Si seleccionamos un pedido.
            if (pedidoSeleccionado != null) {
                int confirmacion = JOptionPane.showConfirmDialog(vista.getPanel1(),
                            "¿Desea borrar el pedido con número " + pedidoSeleccionado.getId() + "?",
                            "Select an Option",
                            JOptionPane.YES_NO_CANCEL_OPTION);
 
+               // Borrar el pedido.
                if (confirmacion == JOptionPane.YES_OPTION) {
                    boolean borrado;
                    try {
@@ -78,6 +82,7 @@ public class Controlador {
                        throw new RuntimeException(ex);
                    }
 
+                   // Informamos al usuario si se ha borrado con éxito el pedido.
                    if (borrado) {
                            vista.eliminarPedidoDeLista(pedidoSeleccionado);
                            JOptionPane.showMessageDialog(vista.getPanel1(), "Pedido eliminado correctamente.");
@@ -89,6 +94,8 @@ public class Controlador {
 
         });
         vista.getBtnHacerPedido().addActionListener(e -> {
+
+           // Creamos un pedido con los datos seleccionados.
            String modelo = vista.getModeloSeleccionado();
            String motor = vista.getMotorSeleccionado();
            String color = vista.getColorSeleccionado();
@@ -96,11 +103,13 @@ public class Controlador {
            boolean piloto = vista.getPilotoAutoSeleccionado();
            Pedido p = new Pedido(modelo, motor, color, ruedas, piloto);
 
+           // Confirmación del pedido.
             int confirmacion = JOptionPane.showConfirmDialog(vista.getPanel1(),
                     "¿Desea encargar el coche?",
                     "Select an Option",
                     JOptionPane.YES_NO_OPTION);
 
+            // Creamos pedido en caso afirmativo.
             if (confirmacion == JOptionPane.YES_OPTION) {
 
                 try {

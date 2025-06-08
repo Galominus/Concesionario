@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class PedidoDAO {
 
+    // Consultas a la base de datos.
+
     public static ArrayList<String> getModelos() throws SQLException {
         Connection con = Conexion.getConexion();
         Statement st = con.createStatement();
